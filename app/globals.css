@@ -1,21 +1,52 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 188.6 22.6% 6.1%;
+    --foreground: 180 1.7% 76.5%;
+    --card: 188.6 22.6% 6.1%;
+    --card-foreground: 180 1.7% 76.5%;
+    --popover: 188.6 22.6% 6.1%;
+    --popover-foreground: 180 1.7% 76.5%;
+    --muted: 0 0% 8.5%;
+    --muted-foreground: 0 0% 55%;
+    --primary: 180 1.7% 76.5%;
+    --primary-foreground: 186.7 22% 8%;
+    --secondary: 0 0% 94.9% / 5%;
+
+    /* not finished */
+    --secondary-foreground: 210 40% 98%;
+    --accent: 0 0% 14.5%;
+    --accent-foreground: 180 1.7% 76.5%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    /*  */
+
+    --border: 0 0% 55%;
+    --input: 0 0% 55%;
+
+    /* not finished */
+    --ring: 212.7 26.8% 83.9%;
+    /*  */
+
+    --radius: 0.75rem;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.skillsIcon {
+  @apply inline-block w-7 h-7;
 }
