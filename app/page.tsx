@@ -1,4 +1,5 @@
 import MotionDivWrapper from "@/components/MotionDivWrapper";
+import Hero from "@/components/Hero";
 
 export default function Home() {
   return (
@@ -7,7 +8,9 @@ export default function Home() {
         animate={{ opacity: 1 }}
         transition={{ duration: 2 }}
     >
-      hello!
+      <section>
+        <Hero />
+      </section>
     </MotionDivWrapper>
   );
 }

@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import Image from "next/image";
 import avatarImg from "@/public/images/avatar.png"
@@ -11,7 +13,7 @@ export default function Avatar({page}: AvatarProps) {
     return (
         <div className="flex items-center justify-start col-span-1">
             <Link href="/">
-                <div className="flex flex-col items-center justify-end">
+                <div className="flex flex-col items-start justify-end">
                     <Image
                         src={avatarImg}
                         alt="avatar"
