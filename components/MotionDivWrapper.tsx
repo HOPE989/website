@@ -1,9 +1,9 @@
 "use client"
 
 import { motion, MotionProps } from "framer-motion";
-import { ReactNode } from "react";
+import {HTMLAttributes, ReactNode} from "react";
 
-interface MotionDivWrapperProps extends MotionProps {
+interface MotionDivWrapperProps extends Omit<HTMLAttributes<HTMLDivElement>, keyof MotionProps>, MotionProps {
     children: ReactNode;
 }
 
