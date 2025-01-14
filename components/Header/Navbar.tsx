@@ -29,7 +29,7 @@ export default function Navbar({ page }: { page: string }) {
                                             </>
                                         )
                                     }
-                                    <Link href={item.href}>
+                                    <Link href={item.href} className="transition hover:text-lime-500">
                                         <motion.div
                                             whileHover={{
                                                 backgroundColor: "#f2f2f20d"
