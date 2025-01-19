@@ -35,10 +35,10 @@ const BlogPostsPage:FC<Props> = ({
                         <BlogPostTableOfContents headings={post.headings} />
                     </div>
                 </aside>
-                <div className="max-w-2xl md:flex-1 md:shrink-0">
+                <div className="max-w-2xl md:flex-1 md:shrink-0 mx-auto">
                     <Link
                         href="/blog"
-                        className="group mb-8 flex h-10 w-10 items-center justify-center rounded-full border shadow-md shadow-zinc-800/5 border-zinc-700/50 bg-zinc-800 ring-0 ring-white/10 hover:border-zinc-700 hover:ring-white/20 lg:absolute lg:-left-5 lg:-mt-2 lg:mb-0 xl:-top-1.5 xl:left-0 xl:mt-0"
+                        className=" group mb-8 flex h-10 w-10 items-center justify-center rounded-full border shadow-md shadow-zinc-800/5 border-zinc-700/50 bg-zinc-800 ring-0 ring-white/10 hover:border-zinc-700 hover:ring-white/20 lg:absolute lg:-left-5 lg:-mt-2 lg:mb-0 xl:-top-1.5 xl:left-0 xl:mt-0"
                     >
                         <ArrowLeft className="w-5 h-5"/>
                     </Link>
@@ -161,11 +161,10 @@ const BlogPostsPage:FC<Props> = ({
                         </header>
 
                         <div className="mt-8 prose-invert">
-                            <PortableText value={post.body} />
+                            <PortableText value={post.body}/>
                         </div>
                     </article>
                 </div>
-
             </div>
         </section>
     )
