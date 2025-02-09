@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import {TagIcon} from "@sanity/icons";
 import Balancer from "react-wrap-balancer";
 import {PortableText} from "@portabletext/react";
+import {PostPortableText} from "@/components/PostPortableText";
 
 interface Props {
     post: PostDetail
@@ -25,8 +26,6 @@ const BlogPostsPage:FC<Props> = ({
     reactions,
     relatedViews
 }) => {
-    console.log(post.body)
-
     return (
         <section className="mt-16 lg:mt-32">
             <div className="w-full md:flex md:justify-between xl:relative">
@@ -160,8 +159,8 @@ const BlogPostsPage:FC<Props> = ({
                             </motion.div>
                         </header>
 
-                        <div className="mt-8 prose-invert">
-                            <PortableText value={post.body}/>
+                        <div className="mt-8 prose prose-invert">
+                            <PostPortableText value={post.body} />
                         </div>
                     </article>
                 </div>
