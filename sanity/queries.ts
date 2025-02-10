@@ -100,7 +100,7 @@ export const getBlogPost = (slug: string) =>
   })
 
 export const getSettingsQuery = () =>
-  groq`
+    groq`
   *[_type == "settings"][0] {
     "projects": projects[]->{
       _id,
@@ -119,16 +119,16 @@ export const getSettingsQuery = () =>
     }
 }`
 export const getSettings = () =>
-  client.fetch<{
-    projects: Project[] | null
-    heroPhotos?: string[] | null
-    resume?:
-      | {
-          company: string
-          title: string
-          logo: string
-          start: string
-          end?: string
+    client.fetch<{
+        projects: Project[] | null
+        heroPhotos?: string[] | null
+        resume?:
+            | {
+            company: string
+            title: string
+            logo: string
+            start: string
+            end?: string
         }[]
-      | null
-  }>(getSettingsQuery())
+            | null
+    }>(getSettingsQuery())
