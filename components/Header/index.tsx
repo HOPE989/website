@@ -5,6 +5,7 @@ import {usePathname} from "next/navigation";
 import Navbar from "@/components/Header/Navbar";
 import Link from "next/link";
 import GithubIcon from "@/public/icons/GithubIcon";
+import SignInAndOut from "@/components/Header/SignIn";
 
 export default function Header() {
     const pathname = usePathname()
@@ -24,9 +25,7 @@ export default function Header() {
                 >
                     <GithubIcon />
                 </Link>
-                {
-                    //todo login
-                }
+                <SignInAndOut pathname={pathname} />
             </div>
         </header>
     )

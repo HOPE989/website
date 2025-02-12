@@ -20,19 +20,19 @@ export default async function Projects() {
                                         alt="Project image"
                                         width={36}
                                         height={36}
-                                        className="object-contain "
+                                        className="object-contain rounded-full"
                                     />
                                 </div>
 
-                                <div>
+                                <div className="w-full">
                                     <h2 className="mb-4 font-semibold">{project.name}</h2>
-                                    <p className="text-sm font-light text-muted-foreground">
+                                    <p className="text-sm font-light text-muted-foreground break-words">
                                         {project.description}
                                     </p>
                                 </div>
 
-                                <div className="flex items-center justify-center gap-2 text-sm">
-                                    <p>{new URL(project.url).host}</p>
+                                <div className="flex items-center gap-2 text-sm w-full">
+                                    <p className="break-words">{new URL(project.url).host}</p>
                                     <ExternalLink className="size-4" />
                                 </div>
                             </div>
