@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<h1 align="center">hope的个人博客主页</h1>
 
-## Getting Started
+<p align="center">
+  <img src="https://img.shields.io/badge/License-MIT-orange"/>
+  <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen"/>
+  <img src="https://img.shields.io/badge/Powered%20by-React-blue"/>
+</p>
 
-First, run the development server:
+![home page picture](/public/images/home.png)
+
+## ⚙️ 技术栈
+
+- 框架：**React + Next.js**
+- 样式：**Tailwind CSS** + **Shadcn UI**
+- 动画：**Framer Motion**
+- 会话缓存：**Upstash Redis**
+- 内容管理系统：**Sanity**
+- 认证：**Clerk**
+- 部署：**Vercel**
+
+## 💡快速开始
+
+### 环境要求
+
+- [Node.js 18.18](https://nodejs.org/) 或更高版本。
+
+### 克隆仓库
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/HOPE989/website.git
+cd website
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 安装依赖:
 
-You can start editing the page by modifying `app/index.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 配置 .env 文件
 
-## Learn More
+在项目根目录下创建一个 .env 文件，内容如下：
 
-To learn more about Next.js, take a look at the following resources:
+```
+# sanity
+NEXT_PUBLIC_SANITY_PROJECT_ID=""
+NEXT_PUBLIC_SANITY_DATASET="production"
+NEXT_PUBLIC_SANITY_USE_CDN="false"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# clerk
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# upstash
+UPSTASH_REDIS_REST_TOKEN=""
+UPSTASH_REDIS_REST_URL=""
 
-## Deploy on Vercel
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+现在我们需要设置所有的环境变量。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Clerk
+
+1. 前往 [Clerk官网](https://clerk.com/) 并创建一个应用程序。选择 Google 和 GitHub 作为登录选项：
+
+2. 复制环境变量并粘贴到 .env 文件中：
+
+#### Sanity
+
+1. 前往 [Sanity官网](https://www.sanity.io/manage) 获取project id，并将其赋值给 .env 文件中的 NEXT_PUBLIC_SANITY_ID。
+
+2. 打开 [localhost:3000/studio](http://localhost:3333/studio)，现在可以向网站添加项目了。
+
+### 启动服务器
+
+🎉 恭喜！现在我们可以启动网站了：
+
+```bash
+pnpm dev
+```
+
+在浏览器中访问 [localhost:3000](http://localhost:3000)，查看网站效果。
+
+### 部署
+
+1. 将项目放上自己的 [Github](https://github.com/)
+
+2. 打开[Vercel](https://vercel.com/) ，使用github登录
+
+3. 从github import该项目
+
+4. 将.env的环境变量填入设置，随后vercel将自动部署
+
+## 致谢
+
+- 网站参考了[cali.so](https://cali.so/)的设计。
+
