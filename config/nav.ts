@@ -12,7 +12,7 @@ export const navigationItems = [
         href: "/project",
     },
     {
-        name: "Message",
-        href: "/message",
+        name: "Chat",
+        href: "/chat",
     },
 ]
