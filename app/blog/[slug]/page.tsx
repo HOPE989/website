@@ -1,14 +1,10 @@
 import {FC} from "react";
-import Link from "next/link";
-import {ArrowLeft} from "lucide-react";
-import Image from "next/image";
 import {getBlogPost} from "@/sanity/queries";
 import {notFound} from "next/navigation";
 import BlogPostPage from "@/components/BlogPostPage";
 import {env} from "@/env.mjs";
 import {redis} from "@/lib/redis";
 import {kvKeys} from "@/config/kv";
-import {url} from "@/lib";
 
 interface Props {
     params:{

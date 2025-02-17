@@ -1,7 +1,6 @@
 import MotionDivWrapper from "@/components/MotionDivWrapper";
 import Hero from "@/components/Hero";
 import SkillsBar from "@/components/SkillsBar";
-import {Newspaper} from "lucide-react";
 import RecentUpdate from "@/components/RecentUpdate";
 
 export default function Home() {
