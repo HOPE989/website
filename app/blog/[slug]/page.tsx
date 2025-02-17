@@ -6,12 +6,13 @@ import {redis} from "@/lib/redis";
 import {kvKeys} from "@/config/kv";
 
 interface Props {
-    params:{
+    params: Promise<{
         slug: string,
-    }
+    }>
 }
 
-export const generateMetadata = async ({ params }: Props) => {
+export const generateMetadata = async (props: Props) => {
+    const params = await props.params;
     //Error: Route "/blog/[slug]" used `params.slug`. `params` should be awaited before using its properties.
     // Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
     const { slug } = params
@@ -50,9 +51,8 @@ export const generateMetadata = async ({ params }: Props) => {
     }
 }
 
-const Blog: FC<Props> = async ({
-    params
-}) => {
+const Blog: FC<Props> = async props => {
+    const params = await props.params;
     const { slug } = params
     const post = await getBlogPost(slug)
     if (!post) {
