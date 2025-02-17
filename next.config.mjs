@@ -1,8 +1,4 @@
-const loadEnv = async () => {
-    if (!process.env.SKIP_ENV_VALIDATION) {
-        await import('./env.mjs');
-    }
-};
+!process.env.SKIP_ENV_VALIDATION && (await import('./env.mjs'))
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
