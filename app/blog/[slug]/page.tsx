@@ -15,8 +15,8 @@ interface Props {
 export const generateMetadata = async ({ params }: Props) => {
     //Error: Route "/blog/[slug]" used `params.slug`. `params` should be awaited before using its properties.
     // Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-    const { slug } =await params;
-    const post = await getBlogPost(slug);
+    const { slug } = params
+    const post = await getBlogPost(slug)
     if (!post) {
         notFound()
     }
@@ -54,7 +54,7 @@ export const generateMetadata = async ({ params }: Props) => {
 const Blog: FC<Props> = async ({
     params
 }) => {
-    const { slug } = await params
+    const { slug } = params
     const post = await getBlogPost(slug)
     if (!post) {
         notFound()
