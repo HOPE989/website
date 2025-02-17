@@ -1,4 +1,7 @@
 import {MousePointerClick} from "lucide-react";
+import {env} from "std-env";
+import {redis} from "@/lib/redis";
+import {kvKeys} from "@/config/kv";
 
 interface VisitorGeolocation {
     country: string
@@ -6,17 +9,16 @@ interface VisitorGeolocation {
     flag: string
 }
 
-export default function LastVisitorInfo() {
+export default async function LastVisitorInfo() {
     let lastVisitor: VisitorGeolocation | undefined = undefined
-    // todo
-    // if (env.VERCEL_ENV === 'production') {
-    //     const [lv, cv] = await redis.mget<VisitorGeolocation[]>(
-    //         kvKeys.lastVisitor,
-    //         kvKeys.currentVisitor
-    //     )
-    //     lastVisitor = lv
-    //     await redis.set(kvKeys.lastVisitor, cv)
-    // }
+    if (env.VERCEL_ENV === 'production') {
+        const [lv, cv] = await redis.mget<VisitorGeolocation[]>(
+            kvKeys.lastVisitor,
+            kvKeys.currentVisitor
+        )
+        lastVisitor = lv
+        await redis.set(kvKeys.lastVisitor, cv)
+    }
 
     if (!lastVisitor) {
         lastVisitor = {

@@ -5,6 +5,10 @@ import Image from "next/image";
 import {getBlogPost} from "@/sanity/queries";
 import {notFound} from "next/navigation";
 import BlogPostPage from "@/components/BlogPostPage";
+import {env} from "@/env.mjs";
+import {redis} from "@/lib/redis";
+import {kvKeys} from "@/config/kv";
+import {url} from "@/lib";
 
 interface Props {
     params:{
@@ -60,27 +64,17 @@ const Blog: FC<Props> = async ({
         notFound()
     }
 
-    //todo
-    //add redis
-    let views = 30578
-
-     //todo
-    let reactions = Array.from({ length: 4 }, () =>
-        Math.floor(Math.random() * 50000)
-    )
-
-    //todo
-    let relatedViews: number[] = []
-    if (typeof post.related !== 'undefined' && post.related.length > 0) {
-        relatedViews = post.related.map(() => Math.floor(Math.random() * 1000))
+    let views: number
+    if (env.VERCEL_ENV === 'production') {
+        views = await redis.incr(kvKeys.postViews(post._id))
+    } else {
+        views = 30578
     }
 
     return (
         <BlogPostPage
             post={post}
             views={views}
-            relatedViews={relatedViews}
-            reactions={reactions.length > 0 ? reactions : undefined}
         />
   )
 }

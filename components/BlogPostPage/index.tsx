@@ -10,21 +10,16 @@ import { motion } from "framer-motion";
 import dayjs from "dayjs";
 import {TagIcon} from "@sanity/icons";
 import Balancer from "react-wrap-balancer";
-import {PortableText} from "@portabletext/react";
 import {PostPortableText} from "@/components/PostPortableText";
 
 interface Props {
     post: PostDetail
     views?: number
-    reactions?: number[]
-    relatedViews: number[]
 }
 
 const BlogPostsPage:FC<Props> = ({
     post,
     views,
-    reactions,
-    relatedViews
 }) => {
     return (
         <section className="mt-16 lg:mt-32">
