@@ -2,7 +2,6 @@ import {FC} from "react";
 import {getBlogPost} from "@/sanity/queries";
 import {notFound} from "next/navigation";
 import BlogPostPage from "@/components/BlogPostPage";
-import {env} from "@/env.mjs";
 import {redis} from "@/lib/redis";
 import {kvKeys} from "@/config/kv";
 
@@ -61,7 +60,7 @@ const Blog: FC<Props> = async ({
     }
 
     let views: number
-    if (env.VERCEL_ENV === 'production') {
+    if (process.env.VERCEL_ENV === 'production') {
         views = await redis.incr(kvKeys.postViews(post._id))
     } else {
         views = 30578

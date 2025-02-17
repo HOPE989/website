@@ -1,11 +1,10 @@
 import {UserIcon} from "lucide-react";
-import {env} from "@/env.mjs";
 import {redis} from "@/lib/redis";
 import {kvKeys} from "@/config/kv";
 
 export default async function TotalPageView() {
     let views: number
-    if (env.VERCEL_ENV === "production") {
+    if (process.env.VERCEL_ENV === "production") {
         views = await redis.incr(kvKeys.totalPageViews)
     }else {
         views = 345678

@@ -3,7 +3,6 @@ import {type NextRequest, NextResponse} from "next/server";
 import {geolocation} from "@vercel/functions";
 import {get} from "@vercel/edge-config";
 import {getIP} from "@/lib/ip";
-import {env} from "@/env.mjs";
 import countries from "@/lib/countries.json";
 import {redis} from "@/lib/redis";
 import {kvKeys} from "@/config/kv";
@@ -45,7 +44,7 @@ export default clerkMiddleware(
             }
         }
 
-        if (geo && !isApi && env.VERCEL_ENV === 'production') {
+        if (geo && !isApi && process.env.VERCEL_ENV === 'production') {
             const country = geo.country
             const city = geo.city
 
