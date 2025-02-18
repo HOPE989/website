@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
 
      experimental: {
          taint: true,
-     }
+     },
  };
 
  export default nextConfig;

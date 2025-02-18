@@ -8,7 +8,7 @@ export function createCallbacksTransformer() {
     });
 }
 
-export function AIStream(res): ReadableStream {
+export function AIStream(res: Response): ReadableStream {
     if (!res.ok) {
         throw new Error(
             `Failed to convert the response to stream. Received status code: ${res.status}.`
@@ -26,4 +26,3 @@ export function AIStream(res): ReadableStream {
     return stream;
     // .pipeThrough(createCallbacksTransformer);
 }
-
