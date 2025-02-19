@@ -143,9 +143,6 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.17)
-      tencentcloud-sdk-nodejs:
-        specifier: ^4.0.1032
-        version: 4.0.1032
       tencentcloud-sdk-nodejs-common:
         specifier: ^4.0.1031
         version: 4.0.1031
@@ -6455,10 +6452,6 @@ packages:
 
   tencentcloud-sdk-nodejs-lkeap@4.0.1031:
     resolution: {integrity: sha512-xLj+Tg4NCMVL9+NBLhXp81nRkfeCs6fuDnB71aai153rp4B5FaPZbZnHd3636ozkt5gxD6iLpHJszS+j/N39LA==}
-    engines: {node: '>=10'}
-
-  tencentcloud-sdk-nodejs@4.0.1032:
-    resolution: {integrity: sha512-aX2GtKVNSLJZYX2FLntteNYx3qbFogIXHS9JY74Eu0MfWJBxavYafIpQPswhx066cx3AgXn+bpnD9KCL0dt9QA==}
     engines: {node: '>=10'}
 
   terser@5.37.0:
@@ -14616,20 +14609,6 @@ snapshots:
     dependencies:
       tencentcloud-sdk-nodejs-common: 4.0.1031
       tslib: 1.13.0
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-
-  tencentcloud-sdk-nodejs@4.0.1032:
-    dependencies:
-      form-data: 3.0.3
-      get-stream: 6.0.1
-      https-proxy-agent: 5.0.1
-      is-stream: 2.0.1
-      json-bigint: 1.0.0
-      node-fetch: 2.7.0
-      tslib: 1.13.0
-      uuid: 9.0.1
     transitivePeerDependencies:
       - encoding
       - supports-color

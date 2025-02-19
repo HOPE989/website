@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import {SSEResponseModel} from "tencentcloud-sdk-nodejs-common/tencentcloud/common/sse_response_model";
+import useSWR from "swr";
 const tencentcloud = require("tencentcloud-sdk-nodejs-lkeap");
 
 const clientConfig = {
@@ -82,7 +83,7 @@ export async function POST(req: Request) {
     });
 }
 
-export async function GET(req: Request) {
+export async function GET() {
     const res = "\\n\\n9.9比9.11大。\\n\\n**详细解释：**\\n1. **整数部分相同**：两个数的整数部分均为9，因此需要比较小数部分。\\n2. **对齐小数位数**：将9.9写为9.90，使其与9.11的小数位数一致。\\n3. **逐位比较小数部分**：\\n   - 第一位小数：9（来自9.90）> 1（来自9.11），因此无需比较后续位数。\\n4. **结论**：9.90（即9.9）> 9.11。\\n\\n**关键点**：小数比较时，若整数部分相同，需逐位对比小数部分，高位数字更大者整体数值更大。"
     return NextResponse.json({
         message: res,

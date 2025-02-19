@@ -1,6 +1,7 @@
 "use client"
 import MessageCard from "@/components/MessageCard";
-import {useState} from "react";
+import {useChat} from "@/hooks/useChat";
+import {ChangeEvent, FormEvent} from "react";
 
 export type Message = {
     id: string;
@@ -10,28 +11,30 @@ export type Message = {
 };
 
 const Chat = () => {
+    const {
+        messages,
+        input,
+        setInput,
+        append,
+    } = useChat({})
 
-    const messages: Message[] = [
-        { id: '1', content: 'hello', role: 'user' },
-        { id: '2', content: 'world', role: 'assistant' },
-    ];
-
-    const [inputValue, setInputValue] = useState('');
-
-    const handleInputChange = (e) => {
-      setInputValue(e.target.value);
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+      setInput(e.target.value);
     }
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const res = await fetch('/api/chat', {
-            method: 'POST',
-            body: JSON.stringify({
-                data: inputValue,
-            }),
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        if (!input) {
+            return;
+        }
+
+        append({
+            content: input,
+            role: 'user',
+            createdAt: new Date(),
         })
 
-        console.log(res)
+        setInput("")
     }
 
     return (
@@ -44,7 +47,7 @@ const Chat = () => {
 
             <form onSubmit={handleSubmit}>
                 <input
-                    value={inputValue}
+                    value={input}
                     onChange={handleInputChange}
                     className="w-full p-3 focus-visible:outline-gray-300 rounded shadow-xl focus:shadow-2xl transition-all"
                     placeholder="随便说点什么..."
