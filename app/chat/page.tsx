@@ -1,7 +1,10 @@
 "use client"
 import MessageCard from "@/components/MessageCard";
 import {useChat} from "@/hooks/useChat";
-import {ChangeEvent, FormEvent} from "react";
+import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
+import MotionDivWrapper from "@/components/MotionDivWrapper";
+import Description from "@/components/Description";
+import {getClientRect} from "@dnd-kit/core";
 
 export type Message = {
     id: string;
@@ -38,22 +41,32 @@ const Chat = () => {
     }
 
     return (
-        <div className="flex h-full flex-col w-full max-w-xl pb-36 pt-9 mx-auto stretch">
-            <ul className="space-y-4">
+        <MotionDivWrapper
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2 }}
+            className="flex flex-col gap-10 relative h-full w-full"
+        >
+            <Description page="Chat" description=""/>
+            <ul className="flex-grow space-y-4">
                 {messages.map((message) => (
                     <MessageCard key={message.id} message={message} />
                 ))}
             </ul>
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    value={input}
-                    onChange={handleInputChange}
-                    className="w-full p-3 focus-visible:outline-gray-300 rounded shadow-xl focus:shadow-2xl transition-all"
-                    placeholder="随便说点什么..."
-                />
-            </form>
-        </div>
+            <div className="w-full">
+                <div className="p-4 rounded-3xl bg-[#303030]">
+                    <form onSubmit={handleSubmit} className="flex space-x-2">
+                        <input
+                            value={input}
+                            onChange={handleInputChange}
+                            className="w-full p-2 rounded bg-[#303030] focus: outline-none"
+                            placeholder="随便说点什么..."
+                        />
+                    </form>
+                </div>
+            </div>
+        </MotionDivWrapper>
     );
 };
 export default Chat;

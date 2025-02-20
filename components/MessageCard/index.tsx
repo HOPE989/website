@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import {Message} from "@/components/MessageCard/type";
+import {markdownToHTML} from "@/lib/marked";
+import ContentBlock from "@/components/MessageCard/ContentBlock";
 
 interface MessageCardProps {
     message: Message;
@@ -23,10 +25,27 @@ const Avatar = ({ role }: AvatarProps) => {
 };
 
 const MessageCard = ({ message }: MessageCardProps) => {
+    const content = markdownToHTML(message.content);
+
     return (
-        <div key={message.id} className="flex items-center">
-            <Avatar role={message.role} />
-            <div className="ml-2">{message.content}</div>
+        <div key={message.id}>
+
+            {
+                message.role === 'assistant' && (
+                    <div className="flex items-start">
+                        <Avatar role={message.role} />
+                        <ContentBlock content={content as string} />
+                    </div>
+                )
+            }
+            {
+                message.role === 'user' && (
+                    <div className="flex items-start justify-end">
+                        <div className="ml-2 prose" dangerouslySetInnerHTML={{ __html: content as string }} />
+                        <Avatar role={message.role} />
+                    </div>
+                )
+            }
         </div>
     );
 };
