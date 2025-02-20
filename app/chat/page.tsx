@@ -4,6 +4,8 @@ import {useChat} from "@/hooks/useChat";
 import {ChangeEvent, FormEvent} from "react";
 import MotionDivWrapper from "@/components/MotionDivWrapper";
 import Description from "@/components/Description";
+import {RedirectToSignIn, useClerk, useUser} from "@clerk/nextjs";
+import {auth} from "@clerk/nextjs/server";
 
 export type Message = {
     id: string;
@@ -13,6 +15,8 @@ export type Message = {
 };
 
 const Chat = () => {
+    const { openSignIn, user } = useClerk()
+
     const {
         messages,
         input,
@@ -30,7 +34,13 @@ const Chat = () => {
             return;
         }
 
-        append({
+        if (!user) {
+            openSignIn();
+            return;
+
+        }
+
+        await append({
             content: input,
             role: 'user',
             createdAt: new Date(),
