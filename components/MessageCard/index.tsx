@@ -2,50 +2,40 @@ import classNames from 'classnames';
 import {Message} from "@/components/MessageCard/type";
 import {markdownToHTML} from "@/lib/marked";
 import ContentBlock from "@/components/MessageCard/ContentBlock";
+import {MDXRemote} from "next-mdx-remote/rsc";
+import avatarImg from "@/public/images/avatar.png";
+import Image from "next/image";
 
 interface MessageCardProps {
     message: Message;
 }
 
-type AvatarProps = Pick<Message, 'role'>;
-
-const Avatar = ({ role }: AvatarProps) => {
-    const getName = () => (role === 'user' ? 'U' : 'AI');
-
-    return (
-        <span
-            className={classNames(
-                'w-6 h-6 inline-flex items-center justify-center rounded-full min-w-[24px]',
-                role === 'user' ? 'bg-orange-300' : 'bg-green-400'
-            )}
-        >
-      {getName()}
-    </span>
-    );
-};
-
 const MessageCard = ({ message }: MessageCardProps) => {
     const content = markdownToHTML(message.content);
 
     return (
-        <div key={message.id}>
-
-            {
-                message.role === 'assistant' && (
-                    <div className="flex items-start">
-                        <Avatar role={message.role} />
-                        <ContentBlock content={content as string} />
-                    </div>
-                )
-            }
-            {
-                message.role === 'user' && (
-                    <div className="flex items-start justify-end">
-                        <div className="ml-2 prose" dangerouslySetInnerHTML={{ __html: content as string }} />
-                        <Avatar role={message.role} />
-                    </div>
-                )
-            }
+        <div key={message.id} className="mt-4">
+            <div className={classNames("flex items-start", message.role === 'user' ? 'justify-end' : '')}>
+                {message.role === 'assistant' && (
+                    <Image
+                        src={avatarImg}
+                        alt="avatar"
+                        width={60}
+                        unoptimized
+                        className="decoration-100 rounded-full opacity-60 hover:opacity-90"
+                    />
+                )}
+                <ContentBlock content={content as string} />
+                {message.role === 'user' && (
+                    <Image
+                        src={avatarImg}
+                        alt="avatar"
+                        width={60}
+                        unoptimized
+                        className="decoration-100 rounded-full opacity-60 hover:opacity-90"
+                    />
+                )}
+            </div>
         </div>
     );
 };

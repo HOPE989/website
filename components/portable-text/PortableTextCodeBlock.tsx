@@ -35,18 +35,18 @@ export function PortableTextCodeBlock({
     <div
       data-blockid={value._key}
       data-filename={value.filename}
-      className="group relative mr-3 rounded-3xl border border-[--tw-prose-pre-border] dark:bg-zinc-800/80 md:mr-0"
+      className="group relative mr-3 rounded-3xl border border-[--tw-prose-pre-border] bg-zinc-800/80 md:mr-0"
     >
       <ClientOnly>
         <>
           <div className="relative flex text-xs leading-6 text-slate-400">
             {Boolean(value.filename) && (
               <>
-                <div className="mt-2 flex flex-none items-center border-b border-t border-b-emerald-700 border-t-transparent px-4 py-1 font-medium text-emerald-700 dark:border-b-emerald-200 dark:text-emerald-200">
+                <div className="mt-2 flex flex-none items-center border-b border-t border-t-transparent px-4 py-1 font-medium border-b-emerald-200 text-emerald-200">
                   {value.filename}
                 </div>
                 <div className="flex flex-auto overflow-hidden rounded-tr-3xl pt-2">
-                  <div className="-mr-px flex-auto rounded-tl border border-zinc-300/40 bg-zinc-200/50 dark:border-zinc-500/30 dark:bg-zinc-700/50" />
+                  <div className="-mr-px flex-auto rounded-tl border border-zinc-500/30 bg-zinc-700/50" />
                 </div>
               </>
             )}
@@ -55,7 +55,7 @@ export function PortableTextCodeBlock({
                 <ElegantTooltip content="复制">
                   <button
                     type="button"
-                    className="text-zinc-400 hover:text-zinc-500 dark:text-zinc-500 dark:hover:text-zinc-400"
+                    className="text-zinc-500 hover:text-zinc-400"
                     onClick={onClickCopy}
                   >
                     {hasCopied ? (

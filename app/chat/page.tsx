@@ -1,10 +1,9 @@
 "use client"
 import MessageCard from "@/components/MessageCard";
 import {useChat} from "@/hooks/useChat";
-import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
+import {ChangeEvent, FormEvent} from "react";
 import MotionDivWrapper from "@/components/MotionDivWrapper";
 import Description from "@/components/Description";
-import {getClientRect} from "@dnd-kit/core";
 
 export type Message = {
     id: string;
