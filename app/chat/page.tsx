@@ -22,7 +22,6 @@ const Chat = () => {
         input,
         setInput,
         append,
-        thinking
     } = useChat({})
 
     useEffect(() => {

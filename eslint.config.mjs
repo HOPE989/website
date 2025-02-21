@@ -11,6 +11,12 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off', // 禁用 require 导入
+      '@typescript-eslint/no-explicit-any': 'off',   // 禁用 any 类型"
+    }
+  }
 ];
 
 export default eslintConfig;

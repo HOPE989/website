@@ -5,7 +5,7 @@ import ContentBlock from "@/components/MessageCard/ContentBlock";
 import avatarImg from "@/public/images/avatar.png";
 import Image, {StaticImageData} from "next/image";
 import {useUser} from "@clerk/nextjs";
-import {useEffect, useMemo} from "react";
+import {useMemo} from "react";
 
 interface MessageCardProps {
     message: Message;
