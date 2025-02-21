@@ -69,8 +69,8 @@ export function useChat({
                 }))
 
                 const res = await fetch(api, {
-                    method: "GET",
-                    // body: JSON.stringify({messages: body}),
+                    method: "POST",
+                    body: JSON.stringify({messages: body}),
                 }).catch((error) => {
                     // 如果报错了，回退到上一次的消息列表
                     mutate(previousMessages, false);
@@ -90,18 +90,33 @@ export function useChat({
                     throw new Error('The response body is empty.');
                 }
 
+                let result = "";
                 const createdAt = new Date();
                 const replyId = nanoid();
-                const data = await res.json()
+                const reader = res.body.getReader();
+                const decoder = new TextDecoder();
 
-                mutate([...messagesSnapshot, {
-                    id: replyId,
-                    createdAt: createdAt,
-                    content: data.message,
-                    role: 'assistant',
-                }], false)
+                while (true) {
+                    const { done, value } = await reader.read();
 
-                return data.message;
+                    if (done) {
+                        reader.releaseLock()
+                        break;
+                    }
+
+                    const newRes = decoder.decode(value)
+
+                    result += newRes.replace(/__SYSTEM_LOADING__/g, "");
+
+                    mutate([...messagesSnapshot, {
+                        id: replyId,
+                        createdAt: createdAt,
+                        content: result,
+                        role: 'assistant',
+                    }], false);
+                }
+
+                return result;
             } catch (error) {
                 console.error(error);
                 throw error;

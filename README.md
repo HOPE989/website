@@ -16,6 +16,7 @@
 - 会话缓存：**Upstash Redis**
 - 内容管理系统：**Sanity**
 - 认证：**Clerk**
+- 大语言模型：**DeepSeek**
 - 部署：**Vercel**
 
 ## 💡快速开始
@@ -55,6 +56,10 @@ CLERK_SECRET_KEY=
 UPSTASH_REDIS_REST_TOKEN=""
 UPSTASH_REDIS_REST_URL=""
 
+#Tencent cloud
+TENCENT_CLOUD_SECRET_ID=""
+TENCENT_CLOUD_SECRET_KEY=""
+
 ```
 
 现在我们需要设置所有的环境变量。
@@ -70,6 +75,10 @@ UPSTASH_REDIS_REST_URL=""
 1. 前往 [Sanity官网](https://www.sanity.io/manage) 获取project id，并将其赋值给 .env 文件中的 NEXT_PUBLIC_SANITY_ID。
 
 2. 打开 [localhost:3000/studio](http://localhost:3333/studio)，现在可以向网站添加项目了。
+
+#### Tencent Cloud
+1. 前往 [腾讯云官网](https://cloud.tencent.com/document/product/1772/115970) 获取API KEY和ID，并将其赋值给 .env 文件中的 TENCENT_CLOUD_SECRET_KEY 和 TENCENT_CLOUD_SECRET_ID。
+
 
 ### 启动服务器
 

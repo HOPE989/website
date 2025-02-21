@@ -6,8 +6,8 @@ interface Props {
 
 const ContentBlock:FC<Props> = ({ content }) => {
   return(
-      <div className="ml-4">
-          <div className="mt-4 mx-2 prose prose-invert" dangerouslySetInnerHTML={{__html: content}}/>
+      <div className="m-4 bg-zinc-900 rounded-3xl">
+          <div className="m-4 prose prose-invert break-words" dangerouslySetInnerHTML={{__html: content}}/>
       </div>
   )
 }

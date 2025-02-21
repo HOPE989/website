@@ -1,6 +1,4 @@
 import { NextResponse } from 'next/server';
-import {SSEResponseModel} from "tencentcloud-sdk-nodejs-common/tencentcloud/common/sse_response_model";
-import useSWR from "swr";
 const tencentcloud = require("tencentcloud-sdk-nodejs-lkeap");
 
 const clientConfig = {
@@ -16,71 +14,90 @@ const clientConfig = {
     },
 };
 
-const params = {
-    Model: 'deepseek-r1',
-    Messages: [
-        {
-            Role: 'user',
-            Content: '9.9和9.11谁大？',
-        },
-    ],
-    Stream: true,
-};
-
-// API 处理函数
 export async function POST(req: Request) {
-    let reasoningContent = ""; // 定义完整思考过程
-    let answerContent = ""; // 定义完整回复
-    let isAnswering = false; // 判断是否结束思考过程并开始回复
+    const { messages } = await req.json();
 
-    // 获取腾讯云 LKEAP 客户端
-    const LkeapClient = tencentcloud.lkeap.v20240522.Client;
-    const client = new LkeapClient(clientConfig);
+    try {
+        const LkeapClient = tencentcloud.lkeap.v20240522.Client;
+        const client = new LkeapClient(clientConfig);
 
-    // 获取流式数据
-    const res: SSEResponseModel = await client.ChatCompletions(params);
+        const params = {
+            Model: "deepseek-r1",
+            Messages: messages.map((message: any) => ({
+                Content: message.content,
+                Role: message.role,
+            })),
+            Stream: true,
+        };
 
-    for await (const { data } of res) {
-        let chunk
-        if (data !== "[DONE]"){
-            chunk = JSON.parse(data);
-        }else {
-            process.stdout.write("/n");
-        }
+        const res = await client.ChatCompletions(params);
 
-        if (!chunk?.Choices?.length) {
-            continue;
-        }
+        const encoder = new TextEncoder();
 
-        const delta = chunk.Choices[0].Delta;
+        const stream = new ReadableStream({
+            async start(controller) {
+                let isAnswering = false;
 
-        // 处理空内容情况
-        if (!delta.ReasoningContent && !delta.Content) {
-            continue;
-        }
+                try {
+                    for await (const { data } of res) {
+                        if (data === "[DONE]") {
+                            break;
+                        }
 
-        // 处理开始回答的情况
-        if (!delta.ReasoningContent && !isAnswering) {
-            console.log("\n" + "=".repeat(20) + "完整回复" + "=".repeat(20) + "\n");
-            isAnswering = true;
-        }
+                        let chunk;
+                        try {
+                            chunk = JSON.parse(data);
+                        } catch (err) {
+                            console.error("解析 JSON 失败:", err);
+                            continue;
+                        }
 
-        // 处理思考过程
-        if (delta.ReasoningContent) {
-            process.stdout.write(delta.ReasoningContent);
-            reasoningContent += delta.ReasoningContent;
-        }
-        // 处理回复内容
-        else if (delta.Content) {
-            process.stdout.write(delta.Content);
-            answerContent += delta.Content;
-        }
+                        if (!chunk?.Choices?.length) {
+                            continue;
+                        }
+
+                        const delta = chunk.Choices[0].Delta;
+
+                        if (!delta.ReasoningContent && !delta.Content) {
+                            continue;
+                        }
+
+                        if (!delta.ReasoningContent && !isAnswering) {
+                            isAnswering = true;
+                            console.log("\n" + "=".repeat(20) + "完整回复" + "=".repeat(20) + "\n");
+                        }
+
+                        if (delta.ReasoningContent) {
+                            process.stdout.write(delta.ReasoningContent);
+                            controller.enqueue(encoder.encode("__SYSTEM_LOADING__"));
+                        }
+
+                        if (delta.Content) {
+                            process.stdout.write(delta.Content);
+                            controller.enqueue(encoder.encode(delta.Content));
+                        }
+                    }
+                } catch (err) {
+                    console.error("流处理失败:", err);
+                    controller.enqueue(encoder.encode("data: 服务器错误\n\n"));
+                } finally {
+                    controller.close();
+                }
+            },
+        });
+
+        return new Response(stream, {
+            headers: {
+                "Content-Type": "text/event-stream",
+                "Cache-Control": "no-cache",
+                "Connection": "keep-alive",
+                "Transfer-Encoding": "chunked",
+            },
+        });
+    } catch (error) {
+        console.error("请求失败:", error);
+        return NextResponse.json({ error: "请求失败" }, { status: 500 });
     }
-
-    // 返回响应
-    return NextResponse.json({
-        message: answerContent,
-    });
 }
 
 export async function GET() {

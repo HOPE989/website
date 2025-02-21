@@ -1,11 +1,10 @@
 "use client"
 import MessageCard from "@/components/MessageCard";
 import {useChat} from "@/hooks/useChat";
-import {ChangeEvent, FormEvent} from "react";
+import {ChangeEvent, FormEvent, useEffect, useRef} from "react";
 import MotionDivWrapper from "@/components/MotionDivWrapper";
 import Description from "@/components/Description";
-import {RedirectToSignIn, useClerk, useUser} from "@clerk/nextjs";
-import {auth} from "@clerk/nextjs/server";
+import { useClerk } from "@clerk/nextjs";
 
 export type Message = {
     id: string;
@@ -16,16 +15,32 @@ export type Message = {
 
 const Chat = () => {
     const { openSignIn, user } = useClerk()
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const {
         messages,
         input,
         setInput,
         append,
+        thinking
     } = useChat({})
+
+    useEffect(() => {
+        textareaRef.current!.addEventListener("keydown", e => {
+            if (e.key == "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                textareaRef.current!.form!.dispatchEvent(
+                    new Event("submit", {bubbles: true, cancelable: true})
+                )
+            }
+        })
+    }, [])
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
       setInput(e.target.value);
+      const textarea = e.target;
+      textarea.style.height = "auto";
+      textarea.style.height = textarea.scrollHeight + "px";
     }
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -66,11 +81,13 @@ const Chat = () => {
             <div className="w-full">
                 <div className="p-4 rounded-3xl bg-[#303030]">
                     <form onSubmit={handleSubmit} className="flex space-x-2">
-                        <input
+                        <textarea
+                            ref={textareaRef}
                             value={input}
                             onChange={handleInputChange}
-                            className="w-full p-2 rounded bg-[#303030] focus: outline-none"
+                            className="resize-none max-h-52 scrollbar scrollbar-thumb-muted-foreground scrollbar-track-muted w-full p-2 rounded bg-[#303030] focus: outline-none"
                             placeholder="随便说点什么..."
+                            rows={1}
                         />
                     </form>
                 </div>

@@ -9,7 +9,6 @@ const BlogPosts = async ({ limit=5 }) => {
     const postIdKeys = posts.map(({ _id }) => kvKeys.postViews(_id))
 
     let views: number[] = []
-    console.log(env.VERCEL_ENV)
     if (env.VERCEL_ENV === 'production') {
         if (postIdKeys.length > 0) {
             views = await redis.mget<number[]>(...postIdKeys)
